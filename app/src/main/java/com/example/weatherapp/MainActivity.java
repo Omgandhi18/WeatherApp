@@ -1,12 +1,16 @@
 package com.example.weatherapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +30,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 TextView tempinfo,locinfo,descinfo;
 ImageView iconview;
-
+    private GpsTracker gpsTracker;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -43,16 +47,30 @@ ImageView iconview;
         descinfo=(TextView)findViewById(R.id.descinfo);
         locinfo=(TextView)findViewById(R.id.locinfo);
         iconview=(ImageView)findViewById(R.id.iconview);
+        try {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    
         Geocoder geocoder;
         List<Address> addresses;
         String city = "";
         String main="";
         String desc="";
+        double latitude=0 ;
+        double longitude = 0;
+//        21.870640,73.504288
+        latitude=getLat(latitude);
+        longitude=getLon(longitude);
+        System.out.println(latitude);
+        System.out.println(longitude);
         geocoder = new Geocoder(this, Locale.getDefault());
         String icon="";
         String iconUrl="https://openweathermap.org/img/wn/";
-        double latitude = 21.870640;
-        double longitude = 73.504288;
+
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
              // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
@@ -68,7 +86,7 @@ ImageView iconview;
         String openweatherapikey="a9a7d60c7fb542a91b03a3c864b5b11b";
         OkHttpClient client = new OkHttpClient();
         try {Request request = new Request.Builder()
-                        .url("https://api.openweathermap.org/data/2.5/weather?lat=21.870640&lon=73.504288&appid=a9a7d60c7fb542a91b03a3c864b5b11b&units=metric")
+                        .url("https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=a9a7d60c7fb542a91b03a3c864b5b11b&units=metric")
                         .get()
                         .build();
 
@@ -117,5 +135,23 @@ ImageView iconview;
 //
 
 
+    }
+    public double getLat(double lat){
+        gpsTracker = new GpsTracker(MainActivity.this);
+        if(gpsTracker.canGetLocation()){
+            lat = gpsTracker.getLatitude();
+        }else{
+            gpsTracker.showSettingsAlert();
+        }
+        return lat;
+    }
+    public double getLon(double lon){
+        gpsTracker = new GpsTracker(MainActivity.this);
+        if(gpsTracker.canGetLocation()){
+            lon = gpsTracker.getLongitude();
+        }else{
+            gpsTracker.showSettingsAlert();
+        }
+        return lon;
     }
 }
