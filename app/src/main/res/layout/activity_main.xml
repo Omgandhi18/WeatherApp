@@ -4,54 +4,267 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="#403d405b"
+    android:fitsSystemWindows="true"
+    android:id="@+id/layout"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/iconview"
-        android:layout_width="175sp"
-        android:layout_height="175sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.067"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.221"></ImageView>
-
-    <TextView
+    <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Temperature"
-        android:id="@+id/tempinfo"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:padding="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/descinfo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/locinfo"
+        app:layout_constraintVertical_bias="0.357">
+
+        <TextView
+            android:id="@+id/tempinfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Temperature"
+            android:textColor="@color/white"
+            android:textSize="45sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.066"
+            app:layout_constraintStart_toStartOf="@+id/cd1"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.467" />
+
+        <ImageView
+            android:id="@+id/iconview"
+            android:layout_width="120sp"
+            android:layout_height="120sp"
+            android:layout_gravity="center"></ImageView>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/locinfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
+        android:textColor="@color/white"
         android:textSize="35sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintHorizontal_bias="0.057"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintVertical_bias="0.071" />
+
+    <TextView
+        android:id="@+id/maininfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Main"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.404" />
 
     <TextView
         android:id="@+id/descinfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="Description"
+        android:textAlignment="center"
         android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.073"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.707" />
+        app:layout_constraintVertical_bias="0.461" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cd1"
+        android:layout_width="match_parent"
+        android:layout_height="400sp"
+        android:layout_marginTop="244dp"
+        android:backgroundTint="@color/semiTransparentColor"
+        android:elevation="10sp"
+        app:cardCornerRadius="20sp"
+        android:layout_margin="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll"
+        app:layout_constraintVertical_bias="1.0">
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:id="@+id/ll1"
+         android:orientation="vertical">
+         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="100sp"
+            android:layout_gravity="center_horizontal">
+            <TextView
+                android:layout_width="90sp"
+                android:layout_height="90sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_margin="2sp"
+                android:text="Feels like"
+                android:textColor="@color/white"
+                ></TextView>
+            <TextView
+                android:layout_width="90sp"
+                android:layout_height="90sp"
+                android:layout_gravity="end|center"
+                android:gravity="center"
+                android:layout_margin="5sp"
+                android:textSize="20sp"
+                android:text="Feels like"
+                android:id="@+id/feels_like"
+                android:textColor="@color/white"
+                ></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="130sp">
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:layout_gravity="end|center"
+                    android:gravity="center"
+                    android:layout_margin="5sp"
+                    android:textSize="20sp"
+                    android:text="Min"
+                    android:textColor="@color/white"
+                    ></TextView>
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:layout_gravity="end|center"
+                    android:gravity="center"
+                    android:layout_margin="5sp"
+                    android:textSize="20sp"
+                    android:text="Min"
+                    android:id="@+id/mintemp"
+                    android:textColor="@color/white"
+                    ></TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="130sp">
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:layout_gravity="end|center"
+                    android:gravity="center"
+                    android:layout_margin="5sp"
+                    android:textSize="20sp"
+                    android:text="Max"
+                    android:textColor="@color/white"
+                    ></TextView>
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:layout_gravity="end|center"
+                    android:gravity="center"
+                    android:layout_margin="5sp"
+                    android:textSize="20sp"
+                    android:text="Max"
+                    android:id="@+id/maxtemp"
+                    android:textColor="@color/white"
+                    ></TextView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+         <LinearLayout
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_horizontal">
+             <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="130sp">
+                 <TextView
+                     android:layout_width="80sp"
+                     android:layout_height="80sp"
+                     android:layout_gravity="end|center"
+                     android:gravity="center"
+                     android:layout_margin="5sp"
+                     android:textSize="19sp"
+                     android:text="Humidity"
+                     android:textColor="@color/white"
+                     ></TextView>
+                 <TextView
+                     android:layout_width="80sp"
+                     android:layout_height="80sp"
+                     android:layout_gravity="end|center"
+                     android:gravity="center"
+                     android:layout_margin="5sp"
+                     android:textSize="20sp"
+                     android:text="Humi"
+                     android:id="@+id/humi"
+                     android:textColor="@color/white"
+                     ></TextView>
+             </LinearLayout>
+             <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="130sp">
+                 <TextView
+                     android:layout_width="80sp"
+                     android:layout_height="80sp"
+                     android:layout_gravity="end|center"
+                     android:gravity="center"
+                     android:layout_margin="5sp"
+                     android:textSize="17sp"
+                     android:text="Pressure"
+                     android:textColor="@color/white"
+                     ></TextView>
+                 <TextView
+                     android:layout_width="80sp"
+                     android:layout_height="80sp"
+                     android:layout_gravity="end|center"
+                     android:gravity="center"
+                     android:layout_margin="5sp"
+                     android:textSize="20sp"
+                     android:text="pre"
+                     android:id="@+id/pres"
+                     android:textColor="@color/white"
+                     ></TextView>
+             </LinearLayout>
+
+
+         </LinearLayout>
+
+
+     </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
