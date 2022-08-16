@@ -16,5 +16,9 @@
         <!-- Customize your theme here. -->
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">#6F7EE6</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/weather</item>
+        <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">1000</item>
+        <item name="android:windowSplashScreenIconBackgroundColor" tools:targetApi="s">#6F7EE6</item>
     </style>
 </resources>

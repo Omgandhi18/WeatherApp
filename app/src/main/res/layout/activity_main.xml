@@ -8,6 +8,36 @@
     android:fitsSystemWindows="true"
     android:id="@+id/layout"
     tools:context=".MainActivity">
+    <VideoView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/video"
+        android:alpha="0.2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        ></VideoView>
+
+    <TextView
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="↻"
+        android:textSize="40sp"
+        android:id="@+id/refresh"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:gravity="center"
+        app:layout_constraintHorizontal_bias="0.955"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.019"></TextView>
 
     <LinearLayout
         android:id="@+id/ll"
@@ -43,6 +73,7 @@
         <ImageView
             android:id="@+id/iconview"
             android:layout_width="120sp"
+
             android:layout_height="120sp"
             android:layout_gravity="center"></ImageView>
 
@@ -52,16 +83,17 @@
         android:id="@+id/locinfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Location"
         android:textColor="@color/white"
         android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.071" />
+        app:layout_constraintVertical_bias="0.078" />
 
     <TextView
         android:id="@+id/maininfo"
@@ -128,7 +160,9 @@
                 android:layout_height="90sp"
                 android:layout_gravity="center"
                 android:gravity="center"
+
                 android:textSize="20sp"
+                android:textStyle="bold"
                 android:layout_margin="2sp"
                 android:text="Feels like"
                 android:textColor="@color/white"
@@ -140,6 +174,7 @@
                 android:gravity="center"
                 android:layout_margin="5sp"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 android:text="Feels like"
                 android:id="@+id/feels_like"
                 android:textColor="@color/white"
@@ -161,6 +196,7 @@
                     android:layout_margin="5sp"
                     android:textSize="20sp"
                     android:text="Min"
+                    android:textStyle="bold"
                     android:textColor="@color/white"
                     ></TextView>
                 <TextView
@@ -171,6 +207,7 @@
                     android:layout_margin="5sp"
                     android:textSize="20sp"
                     android:text="Min"
+                    android:textStyle="bold"
                     android:id="@+id/mintemp"
                     android:textColor="@color/white"
                     ></TextView>
@@ -186,6 +223,7 @@
                     android:layout_margin="5sp"
                     android:textSize="20sp"
                     android:text="Max"
+                    android:textStyle="bold"
                     android:textColor="@color/white"
                     ></TextView>
                 <TextView
@@ -196,6 +234,7 @@
                     android:layout_margin="5sp"
                     android:textSize="20sp"
                     android:text="Max"
+                    android:textStyle="bold"
                     android:id="@+id/maxtemp"
                     android:textColor="@color/white"
                     ></TextView>
@@ -216,8 +255,9 @@
                      android:layout_gravity="end|center"
                      android:gravity="center"
                      android:layout_margin="5sp"
-                     android:textSize="19sp"
+                     android:textSize="18sp"
                      android:text="Humidity"
+                     android:textStyle="bold"
                      android:textColor="@color/white"
                      ></TextView>
                  <TextView
@@ -228,6 +268,7 @@
                      android:layout_margin="5sp"
                      android:textSize="20sp"
                      android:text="Humi"
+                     android:textStyle="bold"
                      android:id="@+id/humi"
                      android:textColor="@color/white"
                      ></TextView>
@@ -242,6 +283,7 @@
                      android:gravity="center"
                      android:layout_margin="5sp"
                      android:textSize="17sp"
+                     android:textStyle="bold"
                      android:text="Pressure"
                      android:textColor="@color/white"
                      ></TextView>
@@ -253,6 +295,7 @@
                      android:layout_margin="5sp"
                      android:textSize="20sp"
                      android:text="pre"
+                     android:textStyle="bold"
                      android:id="@+id/pres"
                      android:textColor="@color/white"
                      ></TextView>
@@ -264,6 +307,7 @@
 
      </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 
 
 
