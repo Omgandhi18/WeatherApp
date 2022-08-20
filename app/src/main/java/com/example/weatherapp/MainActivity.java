@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.core.widget.ContentLoadingProgressBar;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -19,11 +20,16 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.squareup.picasso.Picasso;
@@ -40,13 +46,13 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-    TextView tempinfo, locinfo, descinfo, maininfo, pres, humi, maxtemp, mintemp, feels_like, refresh;
+    TextView tempinfo, locinfo, descinfo, maininfo, pres, humi, maxtemp, mintemp, feels_like, refresh,forecast;
     ImageView iconview;
     ConstraintLayout layout;
     CardView cd1;
     VideoView video;
     LinearLayout ll1;
-
+    SwipeListener swipeListener;
 
     private GpsTracker gpsTracker;
 
@@ -72,13 +78,17 @@ public class MainActivity extends AppCompatActivity {
         humi = (TextView) findViewById(R.id.humi);
         maxtemp = (TextView) findViewById(R.id.maxtemp);
         mintemp = (TextView) findViewById(R.id.mintemp);
+        forecast = (TextView) findViewById(R.id.forecast);
         feels_like = (TextView) findViewById(R.id.feels_like);
         layout = (ConstraintLayout) findViewById(R.id.layout);
         ll1 = (LinearLayout) findViewById(R.id.ll1);
         cd1 = (CardView) findViewById(R.id.cd1);
         iconview = (ImageView) findViewById(R.id.iconview);
         video = (VideoView) findViewById(R.id.video);
-
+        swipeListener=new SwipeListener(layout);
+        Animation animation;
+        animation = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.bounce);
         try {
             if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
@@ -86,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        forecast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                forecast.startAnimation(animation);
+            }
+        });
 
         Geocoder geocoder;
         List<Address> addresses;
@@ -279,7 +295,54 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    private class SwipeListener implements View.OnTouchListener{
+        GestureDetector gestureDetector;
+        SwipeListener(View view){
+            int threshold=100;
+            int velocity_threshold=100;
+            GestureDetector.SimpleOnGestureListener listener=new GestureDetector.SimpleOnGestureListener(){
+                @Override
+                public boolean onDown(MotionEvent e) {
+                    return true;
+                }
 
+                @Override
+                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                    float xDiff=e2.getX()-e1.getX();
+                    float yDiff=e2.getY()-e1.getY();
+                    try{
+                        if (Math.abs(xDiff)>Math.abs(yDiff))
+                        {
+                            if (Math.abs(xDiff)>threshold&&Math.abs(velocityX)>velocity_threshold){
+                                if(xDiff>0){
+                                    Toast.makeText(MainActivity.this, "Swiped Right", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else{
+                                    Toast.makeText(MainActivity.this, "Swiped Left", Toast.LENGTH_SHORT).show();
+                                    Intent intent=new Intent(MainActivity.this,ForecastActivity.class);
+                                    startActivity(intent);
+                                }
+                                return true;
+                            }
+                            else{
+
+                            }
+                        }
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    return false;
+                }
+            };
+            gestureDetector=new GestureDetector(listener);
+            view.setOnTouchListener(this);
+        }
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            return gestureDetector.onTouchEvent(motionEvent);
+        }
+    }
     public double getLat(double lat) {
         gpsTracker = new GpsTracker(MainActivity.this);
         if (gpsTracker.canGetLocation()) {
