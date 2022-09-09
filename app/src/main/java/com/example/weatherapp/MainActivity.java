@@ -46,7 +46,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-    TextView tempinfo, locinfo, descinfo, maininfo, pres, humi, maxtemp, mintemp, feels_like, refresh,forecast;
+    TextView tempinfo, locinfo, descinfo, maininfo, pres, humi, maxtemp, mintemp, feels_like, refresh, forecast;
     ImageView iconview;
     ConstraintLayout layout;
     CardView cd1;
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         cd1 = (CardView) findViewById(R.id.cd1);
         iconview = (ImageView) findViewById(R.id.iconview);
         video = (VideoView) findViewById(R.id.video);
-        swipeListener=new SwipeListener(layout);
+        swipeListener = new SwipeListener(layout);
         Animation animation;
         animation = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.bounce);
@@ -207,6 +207,38 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+        } else if ((main.equals("Haze") || main.equals("Smoke") || main.equals("Mist")
+                || main.equals("Dust") || main.equals("Fog") || main.equals("Sand")||main.equals("Ash")
+        ||main.equals("Squall")||main.equals("Tornado"))) {
+            layout.setBackgroundColor(Color.parseColor("#401b4965"));
+            ll1.setBackgroundColor(Color.parseColor("#40000000"));
+            locinfo.setTextColor(Color.parseColor("#FFFFFF"));
+            cd1.setCardBackgroundColor(Color.parseColor("#40000000"));
+            descinfo.setTextColor(Color.parseColor("#FFFFFF"));
+            maininfo.setTextColor(Color.parseColor("#FFFFFF"));
+            tempinfo.setTextColor(Color.parseColor("#FFFFFF"));
+            Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.haze);
+            video.setVideoURI(uri);
+            video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+
+                    mp.setVolume(0, 0);
+                }
+            });
+            video.start();
+
+            video.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+
+                    video.start();
+
+                }
+            });
+
         } else if (main.equals("Clouds")) {
             layout.setBackgroundColor(Color.parseColor("#62b6cb"));
             ll1.setBackgroundColor(Color.parseColor("#40000000"));
@@ -295,12 +327,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private class SwipeListener implements View.OnTouchListener{
+
+    class SwipeListener implements View.OnTouchListener {
         GestureDetector gestureDetector;
-        SwipeListener(View view){
-            int threshold=100;
-            int velocity_threshold=100;
-            GestureDetector.SimpleOnGestureListener listener=new GestureDetector.SimpleOnGestureListener(){
+
+        SwipeListener(View view) {
+            int threshold = 100;
+            int velocity_threshold = 100;
+            GestureDetector.SimpleOnGestureListener listener = new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onDown(MotionEvent e) {
                     return true;
@@ -308,41 +342,40 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                    float xDiff=e2.getX()-e1.getX();
-                    float yDiff=e2.getY()-e1.getY();
-                    try{
-                        if (Math.abs(xDiff)>Math.abs(yDiff))
-                        {
-                            if (Math.abs(xDiff)>threshold&&Math.abs(velocityX)>velocity_threshold){
-                                if(xDiff>0){
+                    float xDiff = e2.getX() - e1.getX();
+                    float yDiff = e2.getY() - e1.getY();
+                    try {
+                        if (Math.abs(xDiff) > Math.abs(yDiff)) {
+                            if (Math.abs(xDiff) > threshold && Math.abs(velocityX) > velocity_threshold) {
+                                if (xDiff > 0) {
                                     Toast.makeText(MainActivity.this, "Swiped Right", Toast.LENGTH_SHORT).show();
 
-                                }
-                                else{
-                                    Toast.makeText(MainActivity.this, "Swiped Left", Toast.LENGTH_SHORT).show();
-                                    Intent intent=new Intent(MainActivity.this,ForecastActivity.class);
+                                } else {
+//                                    Toast.makeText(MainActivity.this, "Swiped Left", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(MainActivity.this, ForecastActivity.class);
                                     startActivity(intent);
                                 }
                                 return true;
-                            }
-                            else{
+                            } else {
 
                             }
                         }
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     return false;
                 }
             };
-            gestureDetector=new GestureDetector(listener);
+            gestureDetector = new GestureDetector(listener);
             view.setOnTouchListener(this);
         }
+
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             return gestureDetector.onTouchEvent(motionEvent);
         }
     }
+
     public double getLat(double lat) {
         gpsTracker = new GpsTracker(MainActivity.this);
         if (gpsTracker.canGetLocation()) {
